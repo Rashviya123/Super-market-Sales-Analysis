@@ -142,3 +142,160 @@ print("Cluster=",kmeans.cluster_centers_)
 print("lable =",kmeans.labels_)
 
 # print(x1)
+
+
+
+# x15 = unit price using polynomial regression
+import numpy
+df15 = x15.to_numpy().flatten()
+mymodel = numpy.poly1d(numpy.polyfit(df15,dY, 2))
+for i in df15:
+  yp = mymodel(df15)
+  # print(yp)
+frame = {"Unit price":df15,"Actual income":dY,"Predicted income":yp}
+s = pd.DataFrame(frame)
+print(s)
+
+# classification
+data = list(zip(df5, dY))
+kmeans = KMeans(n_clusters=3)
+
+kmeans.fit(data)
+
+plt.scatter(df15, dY, c=kmeans.labels_)
+
+plt.show()
+print("Cluster=",kmeans.cluster_centers_)
+print("lable =",kmeans.labels_)
+
+# x15 = unit price using linear regression
+from scipy import stats
+import numpy as np
+slope, intercept, r, p, std_err = stats.linregress(df15, dY)
+def myfunc(x):
+  return slope * x + intercept
+
+for i in df15:
+    ypred = myfunc(i)
+
+A = [myfunc(i) for i in df15]
+b = np.array(A).flatten()
+# print(b)
+frame = {"Unit price":df15,"Actual income":dY,"Predicted income":b}
+s = pd.DataFrame(frame)
+print(s)
+
+
+# x16 = total using polynomial
+df16 = x16.to_numpy().flatten()
+mymodel = numpy.poly1d(numpy.polyfit(df16,dY, 2))
+for i in df16:
+  yp = mymodel(df16)
+  # print(yp)
+frame = {"Total":df16,"Actual income":dY,"Predicted income":yp}
+s = pd.DataFrame(frame)
+print(s)
+
+# classification - 3 clusters
+data = list(zip(df5, dY))
+kmeans = KMeans(n_clusters=3)
+
+kmeans.fit(data)
+
+plt.scatter(df16, dY, c=kmeans.labels_)
+
+plt.show()
+print("Cluster=",kmeans.cluster_centers_)
+print("lable =",kmeans.labels_)
+
+# x16 = total using linear regression
+from scipy import stats
+import numpy as np
+slope, intercept, r, p, std_err = stats.linregress(df16, dY)
+def myfunc(x):
+  return slope * x + intercept
+
+for i in df16:
+    ypred = myfunc(i)
+
+
+A = [myfunc(i) for i in df16]
+b = np.array(A).flatten()
+# print(b)
+frame = {"Total":df16,"Actual income":dY,"Predicted income":b}
+s = pd.DataFrame(frame)
+print(s)
+
+
+from matplotlib import pyplot as plt
+
+plt.plot(s[["Total"]],s[["Actual income"]], '+', label='Actual values')
+plt.plot(s[["Total"]],s[["Predicted income"]], label='Predicted values')
+plt.xlabel('Total payment')
+plt.ylabel('Gross income')
+plt.title('Polynomial regression')
+plt.show()
+
+
+gender = ['Male','Female']
+count = [male,female]
+df = pd.DataFrame({'Gender': gender,'count':count})
+print(df)
+plt.bar(gender,count,color = 'purple')
+plt.xlabel('Gender')
+plt.ylabel('Shopping head Count')
+plt.title('shoppinggraph-gender count')
+plt.show()
+
+
+
+paymentType = ['Cash','Ewallet','Credit card']
+count = [cash,ewallet,creditCard]
+df = pd.DataFrame({'Payment type': paymentType,'count':count})
+print(df)
+plt.bar(paymentType,count,color = 'blue')
+plt.xlabel('Payment type')
+plt.ylabel('head Count')
+plt.title('shoppinggraph-payment type vs count')
+plt.show()
+
+
+paymentType = ['Cash','Ewallet','Credit card']
+TotalPayment = [cashTotal[0],ewalletTotal[0],creditTotal[0]]
+df = pd.DataFrame({'Payment type': paymentType,'Total payment':TotalPayment})
+print(df)
+plt.bar(paymentType,TotalPayment,color = 'pink')
+plt.xlabel('Payment type')
+plt.ylabel('Total payment')
+plt.title('Payment total vs payment type')
+plt.show()
+list1 = df["Total payment"].to_numpy().flatten().tolist()
+print(list1)
+diff = list1[1]-list1[0]
+print(diff)
+
+
+
+productType = ['Home','Food','Sports','Electronics','Fashion','Health & beauty']
+TotalAmount = [home[0],food[0],sports[0],electronic[0],fashion[0],health[0]]
+df = pd.DataFrame({'product type': productType,'TotalSales':TotalAmount})
+print(df)
+plt.bar(productType,TotalAmount,color = 'indigo')
+plt.xlabel('Product type')
+plt.ylabel('Total Amount')
+plt.title('Product type vs Total amount')
+plt.show()
+list1 = df["TotalSales"].to_numpy().flatten().tolist()
+diff = list1[1]-list1[0]
+print(diff)
+
+
+custormerType = ['Member','Normal']
+count = [member[0],normal[0]]
+df = pd.DataFrame({'custormer Type': custormerType,'count':count})
+print(df)
+plt.bar(custormerType,count,color = 'green')
+plt.xlabel('Custormer Type')
+plt.ylabel('count')
+plt.title('CustormerType vs count')
+plt.show()
