@@ -1,1 +1,144 @@
-https://colab.research.google.com/drive/13POBGn7CCD29R3JQiwcaATNe-UChYGa_#scrollTo=V-pyX2GEU4gP
+#https://colab.research.google.com/drive/13POBGn7CCD29R3JQiwcaATNe-UChYGa_#scrollTo=V-pyX2GEU4gP
+
+
+# Upload the data set as DF
+# Perform basic understanding data operations
+# (Understanding size, Shape, Info, etc)
+import pandas as pd
+df = pd.read_excel('supermarketSales.xlsx')
+print(df.head(10))
+print(df.tail(10))
+print("Size: ",df.size)
+print("Shape: ",df.shape)
+print(df.info)
+date = df['Date']
+
+
+
+import sqlite3 as db
+dbName = "Supermarket.sqlite"
+con1 = db.connect(dbName)
+df.to_sql("Sales",if_exists='replace',con = con1)
+df1 = pd.read_sql_query('Select * from Sales', con1)
+print(df["Date"])
+print(df1)
+# con1.close()
+
+
+
+
+# Consider the column which has impact on objective as X,  X1, X2, X3……….Xn and objective as Y
+y = pd.read_sql_query('Select grossIncome from Sales', con1)
+x1 = pd.read_sql_query('Select Gender from Sales where Gender = "Female"', con1)
+x2 = pd.read_sql_query('Select Gender from Sales where Gender = "Male"', con1)
+x3 = pd.read_sql_query('Select Customertype, grossIncome from Sales', con1)
+x4 = pd.read_sql_query('Select Customertype, grossIncome from Sales where Customertype="Normal"', con1)
+x5 = pd.read_sql_query('Select Quantity from Sales', con1)
+x6 = pd.read_sql_query('Select Payment from Sales where Payment="Ewallet"', con1)
+x7 = pd.read_sql_query('Select Payment from Sales where Payment="Cash"', con1)
+x8 = pd.read_sql_query('Select Payment from Sales where Payment="Credit card"', con1)
+x9 = pd.read_sql_query('Select ProductLine from Sales where ProductLine="Electronic accessories"',con1)
+x10 = pd.read_sql_query('Select ProductLine from Sales where ProductLine="Health and beauty accessories"',con1)
+x11 = pd.read_sql_query('Select ProductLine from Sales where ProductLine="Sports and travel"',con1)
+x12 = pd.read_sql_query('Select ProductLine from Sales where ProductLine="Food and beverages"',con1)
+x13 = pd.read_sql_query('Select ProductLine from Sales where ProductLine="Home and lifestyle"',con1)
+x14 = pd.read_sql_query('Select ProductLine from Sales where ProductLine="Fashion accessories"',con1)
+x15 = pd.read_sql_query('Select Unitprice from Sales',con1)
+x16 = pd.read_sql_query('Select Total from Sales',con1)
+x17 = pd.read_sql_query('Select Tax from Sales',con1)
+x18 = pd.read_sql_query('Select sum(Total) from Sales where Payment="Ewallet"', con1)
+x19 = pd.read_sql_query('Select sum(Total) from Sales where Payment="Cash"', con1)
+x20= pd.read_sql_query('Select sum(Total) from Sales where Payment="Credit card"', con1)
+x21 = pd.read_sql_query('Select sum(Total) from Sales where ProductLine="Home and lifestyle"',con1)
+x22 = pd.read_sql_query('Select sum(Total) from Sales where ProductLine="Health and beauty"',con1)
+x23 = pd.read_sql_query('Select sum(Total) from Sales where ProductLine="Fashion accessories"',con1)
+x24 = pd.read_sql_query('Select sum(Total) from Sales where ProductLine="Food and beverages"',con1)
+x25 = pd.read_sql_query('Select sum(Total) from Sales where ProductLine="Sports and travel"',con1)
+x26 = pd.read_sql_query('Select sum(Total) from Sales where ProductLine="Electronic accessories"',con1)
+x27 = pd.read_sql_query("Select count(Time) from Sales where time(Time)>='09:00:00' and time(Time)<='12:00:00'",con1)
+x28 = pd.read_sql_query("Select count(Time) from Sales where time(Time)>'12:00:00' and time(Time)<='18:00:00'",con1)
+x29 = pd.read_sql_query("Select count(Time) from Sales where time(Time)>'18:00:00' and time(Time)<='21:00:00'",con1)
+x30 = pd.read_sql_query("Select count(CustomerType) from Sales where Customertype='Member'",con1)
+member = x30.to_numpy().flatten()
+x31 = pd.read_sql_query("Select count(CustomerType) from Sales where Customertype='Normal'",con1)
+normal = x31.to_numpy().flatten()
+x32 = pd.read_sql_query("Select sum(Total) from Sales where Customertype='Normal'",con1)
+x33 = pd.read_sql_query("Select sum(Total) from Sales where Customertype='Member'",con1)
+x34 = pd.read_sql_query('Select Gender from Sales where Gender = "Male"', con1)
+x35 = pd.read_sql_query('Select sum(Total) from Sales where branch = "A"', con1)
+x36 = pd.read_sql_query('Select sum(Total) from Sales where branch = "B"', con1)
+x37 = pd.read_sql_query('Select sum(Total) from Sales where branch = "C"', con1)
+x38 = pd.read_sql_query('Select * from Sales Order by Date Asc', con1)
+x39 = pd.read_sql_query("Select sum(Total) from Sales where date(Date)>='2019-01-01' and date(Date)<='2019-01-31'", con1)
+x40 = pd.read_sql_query("Select sum(Total) from Sales where date(Date)>='2019-02-01' and date(Date)<='2019-02-28'", con1)
+x41 = pd.read_sql_query("Select  sum(Total) from Sales where date(Date)>='2019-03-01' and date(Date)<='2019-03-31'",con1)
+x42 = pd.read_sql_query("Select count(ProductLine) from Sales where Rating>=6 and ProductLine='Food and beverages'",con1)
+x43 = pd.read_sql_query("Select count(ProductLine) from Sales where Rating>=6 and ProductLine='Sports and travel'",con1)
+x44 = pd.read_sql_query("Select count(ProductLine) from Sales where Rating>=6 and ProductLine='Fashion accessories'",con1)
+x45 = pd.read_sql_query("Select count(ProductLine) from Sales where Rating>=6 and ProductLine='Health and beauty'",con1)
+x46 = pd.read_sql_query("Select count(ProductLine) from Sales where Rating>=6 and ProductLine='Electronic accessories'",con1)
+x47 = pd.read_sql_query("Select sum(Quantity) from Sales", con1)
+print(x47)
+print(x42,x43,x44,x45,x46)
+r1=x42.to_numpy().flatten()
+r2=x43.to_numpy().flatten()
+r3=x44.to_numpy().flatten()
+r4=x45.to_numpy().flatten()
+r5=x46.to_numpy().flatten()
+jan = x39.to_numpy().flatten()
+feb = x40.to_numpy().flatten()
+mar = x41.to_numpy().flatten()
+x38.to_excel("Sales-Date.xlsx")
+
+A = x35.to_numpy().flatten()
+
+print(x38)
+B = x36.to_numpy().flatten()
+C = x37.to_numpy().flatten()
+
+print("A",A)
+memberTotal=x33.to_numpy().flatten()
+normalTotal = x32.to_numpy().flatten()
+time1 = x27.to_numpy().flatten()
+time2 = x28.to_numpy().flatten()
+time3 = x29.to_numpy().flatten()
+sports =x25.to_numpy().flatten()
+print('sports total',sports)
+food = x24.to_numpy().flatten()
+fashion = x23.to_numpy().flatten()
+health = x22.to_numpy().flatten()
+print(health)
+home = x21.to_numpy().flatten()
+electronic = x26.to_numpy().flatten()
+# df3 = x3.to_numpy().flatten()
+df5 = x5.to_numpy().flatten()
+df10 = x10.to_numpy().flatten()
+dY= y.to_numpy().flatten();
+# print(dY)
+# print(df1)
+male = x1.size
+female =x2.size
+print(male,female)
+cash=x7.size
+ewallet=x6.size
+cashTotal =x18.to_numpy().flatten()
+
+ewalletTotal = x19.to_numpy().flatten()
+creditTotal = x20.to_numpy().flatten()
+print(cashTotal)
+creditCard = x8.size
+print(cash,ewallet,creditCard)
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+data = list(zip(df5, dY))
+kmeans = KMeans(n_clusters=3)
+
+kmeans.fit(data)
+
+plt.scatter(df5, dY, c=kmeans.labels_)
+
+plt.show()
+print("Cluster=",kmeans.cluster_centers_)
+print("lable =",kmeans.labels_)
+
+# print(x1)
